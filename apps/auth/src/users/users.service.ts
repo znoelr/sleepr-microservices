@@ -26,4 +26,8 @@ export class UsersService {
       throw new UnauthorizedException('Invalid creadentials');
     }
   }
+
+  async validateUserById(_id: string) {
+    return await this.usersRepository.findOne({ _id });
+  }
 }
