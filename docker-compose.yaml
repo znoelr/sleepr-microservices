@@ -2,14 +2,25 @@
 version: "3.1"
 
 services:
-  reservations:
+  reservations: # microservice for reservations
     build:
       context: .
       dockerfile: ./apps/reservations/Dockerfile
       target: build  # name of the Dockerfile build step
-    command: npm run start:dev
+    command: npm run start:dev reservations
     ports:
       - "3000:3000"
+    volumes:
+      - .:/usr/src/sleepr_app
+
+  auth: # microservice for auth
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: build  # name of the Dockerfile build step
+    command: npm run start:dev auth
+    ports:
+      - "3001:3001"
     volumes:
       - .:/usr/src/sleepr_app
 
