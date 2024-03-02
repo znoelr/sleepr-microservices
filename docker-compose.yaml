@@ -8,6 +8,7 @@ services:
       dockerfile: ./apps/reservations/Dockerfile
       target: build  # name of the Dockerfile build step
     command: npm run start:dev reservations
+    env_file: ./apps/reservations/.env
     ports:
       - "3000:3000"
     volumes:
@@ -19,6 +20,7 @@ services:
       dockerfile: ./apps/auth/Dockerfile
       target: build  # name of the Dockerfile build step
     command: npm run start:dev auth
+    env_file: ./apps/auth/.env
     ports:
       - "3001:3001"
     volumes:
