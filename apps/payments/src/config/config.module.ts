@@ -10,6 +10,7 @@ import * as Joi from 'joi';
     NestConfigModule.forRoot({
       validationSchema: Joi.object({
         TCP_PORT: Joi.number().required(),
+        STRIPE_SECRET_KEY: Joi.string().required(),
       }),
     }),
   ],
