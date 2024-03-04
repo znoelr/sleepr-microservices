@@ -33,8 +33,20 @@ services:
       target: build  # name of the Dockerfile build step
     command: npm run start:dev payments
     env_file: ./apps/payments/.env
-    ports:
-      - "3003:3003"
+    # ports: # No need to map ports because the communication is handled by the docker internal network
+    #   - "3003:3003" # TCP_PORT
+    volumes:
+      - .:/usr/src/sleepr_app
+
+  notifications: # microservice for notifications
+    build:
+      context: .
+      dockerfile: ./apps/notifications/Dockerfile
+      target: build  # name of the Dockerfile build step
+    command: npm run start:dev notifications
+    env_file: ./apps/notifications/.env
+    # ports: # No need to map ports because the communication is handled by the docker internal network
+    #   # - "3004:3004" # TCP_PORT
     volumes:
       - .:/usr/src/sleepr_app
 
