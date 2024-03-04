@@ -37,7 +37,8 @@ export class PaymentsService {
 
     /** NOTIFY EMAIL */
     this.notificationsClientProxy.emit('notify_email', {
-      email: paymentPayloadDto.notify.email,
+      email: paymentPayloadDto.email,
+      text: `Your reservation of $${paymentPayloadDto.amount} was created successfully`,
     });
     return paymentIntent;
   }

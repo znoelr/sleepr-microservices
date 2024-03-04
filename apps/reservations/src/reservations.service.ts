@@ -17,7 +17,7 @@ export class ReservationsService {
     return this.paymentsProxy
       .send('create_payment', {
         ...createReservationDto.payment,
-        notify: { email: user.email },
+        email: user.email,
       })
       .pipe(
         map(async (paymentResponse: any) =>
