@@ -26,5 +26,17 @@ services:
     volumes:
       - .:/usr/src/sleepr_app
 
+  payments: # microservice for payments
+    build:
+      context: .
+      dockerfile: ./apps/payments/Dockerfile
+      target: build  # name of the Dockerfile build step
+    command: npm run start:dev payments
+    env_file: ./apps/payments/.env
+    ports:
+      - "3002:3002"
+    volumes:
+      - .:/usr/src/sleepr_app
+
   mongo:
     image: mongo
