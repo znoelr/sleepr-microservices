@@ -1,5 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AUTH_SERVICE, DatabaseModule, LoggerModule } from '@app/common';
+import {
+  AUTH_SERVICE,
+  DatabaseModule,
+  LoggerModule,
+  PAYMENTS_SERVICE,
+} from '@app/common';
 import { ReservationsService } from './reservations.service';
 import { ReservationsController } from './reservations.controller';
 import { ReservationRepository } from './reservation.repository';
@@ -28,6 +33,17 @@ import { ConfigService } from '@nestjs/config';
           options: {
             host: configService.get<string>('AUTH_HOST'),
             port: configService.get<number>('AUTH_PORT'),
+          },
+        }),
+      },
+      {
+        name: PAYMENTS_SERVICE,
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get<string>('PAYMENTS_HOST'),
+            port: configService.get<number>('PAYMENTS_PORT'),
           },
         }),
       },
