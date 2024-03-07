@@ -12,7 +12,7 @@ message Authentication {
 
 message UserMessage {
   string id = 1;
-  string email = 1;
-  string password = 1;
+  string email = 2;
+  string password = 3;
   // repeated string roles = 1;
 }
