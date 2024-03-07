@@ -2,7 +2,7 @@
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
-export const protobufPackage = "notifications";
+export const notificationsProtobufPackage = "notifications";
 
 export interface NotifyEmailMessage {
   email: string;
