@@ -13,10 +13,10 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.connectMicroservice({
-    transport: Transport.TCP,
+    transport: Transport.RMQ,
     options: {
-      host: '0.0.0.0',
-      port: configService.get<string>('TCP_PORT'),
+      urls: [configService.getOrThrow<string>('RABBITMQ_URI')],
+      queue: 'notifications',
     },
   });
   await app.startAllMicroservices();
