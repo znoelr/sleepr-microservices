@@ -20,6 +20,7 @@ async function bootstrap() {
       url: configService.getOrThrow<string>('PAYMENTS_GRPC_URL'),
     },
   });
+  app.init();
   await app.startAllMicroservices();
 }
 bootstrap();
