@@ -1,10 +1,5 @@
 import { Module } from '@nestjs/common';
-import {
-  AUTH_SERVICE,
-  DatabaseModule,
-  LoggerModule,
-  PAYMENTS_SERVICE,
-} from '@app/common';
+import { DatabaseModule, LoggerModule } from '@app/common';
 import { ReservationsService } from './reservations.service';
 import { ReservationsController } from './reservations.controller';
 import { ReservationRepository } from './reservation.repository';
@@ -17,7 +12,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import {
   AUTH_PACKAGE_NAME,
+  AUTH_SERVICE_NAME,
   PAYMENTS_PACKAGE_NAME,
+  PAYMENTS_SERVICE_NAME,
 } from '@app/common/proto-types';
 import { resolve } from 'path';
 
@@ -31,7 +28,7 @@ import { resolve } from 'path';
     ]),
     ClientsModule.registerAsync([
       {
-        name: AUTH_SERVICE,
+        name: AUTH_SERVICE_NAME,
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => ({
           transport: Transport.GRPC,
@@ -43,7 +40,7 @@ import { resolve } from 'path';
         }),
       },
       {
-        name: PAYMENTS_SERVICE,
+        name: PAYMENTS_SERVICE_NAME,
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => ({
           transport: Transport.GRPC,
