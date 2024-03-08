@@ -15,6 +15,11 @@ import {
 import { ConfigModule } from './config/config.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
+import {
+  AUTH_PACKAGE_NAME,
+  PAYMENTS_PACKAGE_NAME,
+} from '@app/common/proto-types';
+import { resolve } from 'path';
 
 @Module({
   imports: [
@@ -29,10 +34,11 @@ import { ConfigService } from '@nestjs/config';
         name: AUTH_SERVICE,
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => ({
-          transport: Transport.TCP,
+          transport: Transport.GRPC,
           options: {
-            host: configService.get<string>('AUTH_HOST'),
-            port: configService.get<number>('AUTH_PORT'),
+            package: AUTH_PACKAGE_NAME,
+            protoPath: resolve(__dirname, '../../../proto/auth.proto'),
+            url: configService.getOrThrow<string>('AUTH_GRPC_URL'),
           },
         }),
       },
@@ -40,10 +46,11 @@ import { ConfigService } from '@nestjs/config';
         name: PAYMENTS_SERVICE,
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => ({
-          transport: Transport.TCP,
+          transport: Transport.GRPC,
           options: {
-            host: configService.get<string>('PAYMENTS_HOST'),
-            port: configService.get<number>('PAYMENTS_PORT'),
+            package: PAYMENTS_PACKAGE_NAME,
+            protoPath: resolve(__dirname, '../../../proto/payments.proto'),
+            url: configService.getOrThrow<string>('PAYMENTS_GRPC_URL'),
           },
         }),
       },
