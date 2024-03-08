@@ -5,6 +5,8 @@ import { ConfigModule } from './config/config.module';
 import { LoggerModule, NOTIFICATIONS_SERVICE } from '@app/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
+import { NOTIFICATIONS_PACKAGE_NAME } from '@app/common/proto-types';
+import { resolve } from 'path';
 
 @Module({
   imports: [
@@ -15,10 +17,11 @@ import { ConfigService } from '@nestjs/config';
         name: NOTIFICATIONS_SERVICE,
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => ({
-          transport: Transport.TCP,
+          transport: Transport.GRPC,
           options: {
-            host: configService.get<string>('NOTIFICATIONS_HOST'),
-            port: configService.get<number>('NOTIFICATIONS_PORT'),
+            package: NOTIFICATIONS_PACKAGE_NAME,
+            protoPath: resolve(__dirname, '../../../proto/notifications.proto'),
+            url: configService.getOrThrow<string>('NOTIFICATIONS_GRPC_URL'),
           },
         }),
       },
