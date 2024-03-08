@@ -5,6 +5,8 @@ import { Logger } from 'nestjs-pino';
 import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
 import { Transport } from '@nestjs/microservices';
+import { AUTH_PACKAGE_NAME } from '@app/common/proto-types';
+import { resolve } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthModule);
@@ -12,8 +14,9 @@ async function bootstrap() {
   app.connectMicroservice({
     transport: Transport.TCP,
     options: {
-      host: '0.0.0.0',
-      port: configService.get<number>('TCP_PORT'),
+      package: AUTH_PACKAGE_NAME,
+      protoPath: resolve(__dirname, '../../../proto/auth.proto'),
+      url: configService.getOrThrow<string>('AUTH_GRPC_URL'),
     },
   });
   app.use(cookieParser());
