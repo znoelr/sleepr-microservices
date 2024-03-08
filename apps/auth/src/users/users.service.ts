@@ -44,6 +44,7 @@ export class UsersService {
   }
 
   async validateUserById(_id: string) {
-    return await this.usersRepository.findOne({ _id });
+    const user = await this.usersRepository.findOne({ _id });
+    return { ...user, id: user._id };
   }
 }
