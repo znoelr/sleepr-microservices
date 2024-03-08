@@ -28,5 +28,6 @@ COPY package-lock.json .
 RUN npm i --omit=dev
 
 COPY --from=build /usr/src/sleepr_app/dist ./dist
+COPY proto proto
 
 CMD ["node", "dist/apps/reservations/main"]
