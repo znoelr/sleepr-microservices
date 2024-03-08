@@ -16,7 +16,7 @@ async function bootstrap() {
     transport: Transport.GRPC,
     options: {
       package: PAYMENTS_PACKAGE_NAME,
-      protoPath: resolve(__dirname, '../../../proto/notifications.proto'),
+      protoPath: resolve(__dirname, '../../../proto/payments.proto'),
       url: configService.getOrThrow<string>('PAYMENTS_GRPC_URL'),
     },
   });
