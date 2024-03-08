@@ -2,10 +2,13 @@ import { Module } from '@nestjs/common';
 import { PaymentsController } from './payments.controller';
 import { PaymentsService } from './payments.service';
 import { ConfigModule } from './config/config.module';
-import { LoggerModule, NOTIFICATIONS_SERVICE } from '@app/common';
+import { LoggerModule } from '@app/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
-import { NOTIFICATIONS_PACKAGE_NAME } from '@app/common/proto-types';
+import {
+  NOTIFICATIONS_PACKAGE_NAME,
+  NOTIFICATIONS_SERVICE_NAME,
+} from '@app/common/proto-types';
 import { resolve } from 'path';
 
 @Module({
@@ -14,7 +17,7 @@ import { resolve } from 'path';
     LoggerModule,
     ClientsModule.registerAsync([
       {
-        name: NOTIFICATIONS_SERVICE,
+        name: NOTIFICATIONS_SERVICE_NAME,
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => ({
           transport: Transport.GRPC,
