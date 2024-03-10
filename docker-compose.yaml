@@ -50,5 +50,17 @@ services:
     volumes:
       - .:/usr/src/sleepr_app
 
+  api-gateway: # microservice for api-gateway
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+      target: build  # name of the Dockerfile build step
+    command: npm run start:dev api-gateway
+    env_file: ./apps/api-gateway/.env
+    ports:
+      - "3005:3005"
+    volumes:
+      - .:/usr/src/sleepr_app
+
   mongo:
     image: mongo
