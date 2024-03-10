@@ -15,6 +15,9 @@ import {
 import { ConfigModule } from './config/config.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloFederationDriver } from '@nestjs/apollo';
+import { ReservationsResolver } from './reservations.resolver';
 
 @Module({
   imports: [
@@ -24,6 +27,12 @@ import { ConfigService } from '@nestjs/config';
     DatabaseModule.forFeature([
       { name: ReservationDocument.name, schema: ReservationSchema },
     ]),
+    GraphQLModule.forRoot({
+      driver: ApolloFederationDriver,
+      autoSchemaFile: {
+        federation: 2,
+      },
+    }),
     ClientsModule.registerAsync([
       {
         name: AUTH_SERVICE,
@@ -50,6 +59,6 @@ import { ConfigService } from '@nestjs/config';
     ]),
   ],
   controllers: [ReservationsController],
-  providers: [ReservationsService, ReservationRepository],
+  providers: [ReservationsService, ReservationRepository, ReservationsResolver],
 })
 export class ReservationsModule {}
