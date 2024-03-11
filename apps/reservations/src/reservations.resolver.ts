@@ -22,7 +22,7 @@ export class ReservationsResolver {
     return this.reservationsService.findAll();
   }
 
-  @Query(() => ReservationDocument)
+  @Query(() => ReservationDocument, { name: 'reservation' })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.reservationsService.findOne(id);
   }
