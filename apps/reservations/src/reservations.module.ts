@@ -16,7 +16,10 @@ import { ConfigModule } from './config/config.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloFederationDriver } from '@nestjs/apollo';
+import {
+  ApolloFederationDriver,
+  ApolloFederationDriverConfig,
+} from '@nestjs/apollo';
 import { ReservationsResolver } from './reservations.resolver';
 
 @Module({
@@ -27,7 +30,7 @@ import { ReservationsResolver } from './reservations.resolver';
     DatabaseModule.forFeature([
       { name: ReservationDocument.name, schema: ReservationSchema },
     ]),
-    GraphQLModule.forRoot({
+    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
       autoSchemaFile: {
         federation: 2,
