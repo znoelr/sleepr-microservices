@@ -20,6 +20,10 @@ export class PaymentsService {
     private readonly notificationsClientProxy: ClientProxy,
   ) {}
 
+  async findAll() {
+    return (await this.stripe.paymentIntents.list()).data;
+  }
+
   async createPayment(paymentPayloadDto: PaymentPayloadDto) {
     // const paymentMethod = await this.stripe.paymentMethods.create({
     //   type: 'card',
