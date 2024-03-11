@@ -11,6 +11,10 @@ import { CreateUserDto } from './dtos/create-user.dto';
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
+  async findAll() {
+    return await this.usersRepository.find({});
+  }
+
   async create(createUserDto: CreateUserDto) {
     await this.validateUserEmailExists(createUserDto.email);
     return this.usersRepository.create({
