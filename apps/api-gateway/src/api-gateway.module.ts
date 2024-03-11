@@ -47,7 +47,7 @@ import { authContext } from './auth.context';
           transport: Transport.TCP,
           options: {
             host: configService.getOrThrow('AUTH_HOST'),
-            port: configService.getOrThrow('AUTH_PORT'),
+            port: configService.getOrThrow<number>('AUTH_PORT'),
           },
         }),
       },
